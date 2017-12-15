@@ -1,0 +1,76 @@
+from pynq.overlays.base import BaseOverlay
+base = BaseOverlay("base.bit")
+from pynq.lib.video import *
+import cv2
+import numpy as np
+
+CONTRAST_THRESHOLD = 80
+HISTOGRAM_SIZE = 256
+mini = 0
+maxi = 255
+diff = 255
+hist = np.zeros(HISTOGRAM_SIZE, dtype = np.uint)
+
+
+
+
+
+
+
+hdmi_in = base.video.hdmi_in
+hdmi_out = base.video.hdmi_out
+hdmi_in.configure(PIXEL_RGB)
+hdmi_out.configure(hdmi_in.mode, PIXEL_RGB)
+hdmi_in.start()
+hdmi_out.start()
+
+
+
+
+
+
+
+height = hdmi_in.mode.height
+width = hdmi_in.mode.width
+numframes = 10
+for _ in range(numframes):
+    capture = hdmi_in.readframe()
+
+    cv2.cvtColor(capture, cv2.COLOR_RGB2GRAY,dst=gray_frame)
+    capture.freebuffer()
+	gray_frame[np.where(gray_frame < mini)] = 0
+	gray_frame[np.where(gray_frame > maxi)] = 255   
+	for i in range(0,height):
+		for j in range(0,width):
+			if(gray_frame[i,j] >= mini and gray_frame[i,j] <= maxi):
+				gray_frame[i,j] = np.uint8((255*(gray_frame[i,j]-mini)/diff))
+
+	
+
+	hist = cv2.calcHist([gray_frame],[0],None,[256],[0,256])
+	mini = np.where(hist >= CONTRAST_THRESHOLD)[0][0]
+	if mini > 0 :
+		mini = mini - 1
+	hist_rev = hist[::-1]
+	hist_rev = hist_rev[:255-mini]
+	maxi = np.where(hist_rev >= CONTRAST_THRESHOLD)[0][0]
+	maxi = 255 - maxi
+	if maxi < HISTOGRAM_SIZE:
+		maxi = maxi + 1
+	diff = maxi - mini                   
+
+    
+    
+    outframe = hdmi_out.newframe()
+    cv2.cvtColor(gray_frame, cv2.COLOR_GRAY2RGB,dst=outframe)
+    hdmi_out.writeframe(outframe)
+
+
+
+    
+
+
+
+hdmi_out.stop()
+hdmi_in.stop()
+del hdmi_in, hdmi_out
