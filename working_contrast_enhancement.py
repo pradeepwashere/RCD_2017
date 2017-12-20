@@ -25,8 +25,8 @@ while(capture.isOpened()):
 				gray_image[i,j] = 0
 			elif(gray_image[i,j] > maxi):
 				gray_image[i,j] = 255
-			else :
-				gray_image[i,j] = np.uint8((255*(gray_image[i,j]-mini)/diff))
+			else: #if(gray_image[i,j] >= mini and gray_image[i,j] <= maxi):
+				gray_image[i,j] = np.uint8((maxi*(gray_image[i,j]-mini)/diff))
 
 	x = 0
 	while(x < HISTOGRAM_SIZE and histogram[x] < CONTRAST_THRESHOLD):
@@ -37,12 +37,13 @@ while(capture.isOpened()):
 		x = x - 1
 	maxi = x
 	diff = maxi - mini
+	print(diff)
 	#pl.imshow(gray_image)
 	#pl.pause(0.00001)
 	#pl.draw()
-	gray_image = gray_image/256 #normalising - only for cv2.imshow(), if pl.draw() is used, this is not needed
+	#gray_image = gray_image/256 #normalising - only for cv2.imshow(), if pl.draw() is used, this is not needed
 	cv2.imshow('frame',gray_image)
-
+	
 	if cv2.waitKey(1) & 0xFF == 27 :
 		break
 

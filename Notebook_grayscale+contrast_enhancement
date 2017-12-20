@@ -45,28 +45,29 @@ for _ in range(numframes):
 				gray_frame[i,j] = 0
 			elif(gray_frame[i,j] > maxi):
 				gray_frame[i,j] = 255
-			else :
-				gray_frame[i,j] = np.uint8((255*(gray_frame[i,j]-mini)/diff))
+			else: #if((gray_frame[i,j] >= mini) and (gray_frame[i,j] <= maxi)):
+				gray_frame[i,j] = np.uint8((maxi*(gray_frame[i,j]-mini)/diff))
+
 	capture.freebuffer()
 	x = 0
-	while(x < HISTOGRAM_SIZE and histogram[x] < CONTRAST_THRESHOLD):
+	while((x < HISTOGRAM_SIZE) and (histogram[x] < CONTRAST_THRESHOLD)):
 		x = x + 1
 	mini = x
 	x = HISTOGRAM_SIZE - 1
-	while(x > mini and histogram[x] < CONTRAST_THRESHOLD):
+	while((x > mini) and (histogram[x] < CONTRAST_THRESHOLD)):
 		x = x - 1
 	maxi = x
 	diff = maxi - mini
-    
-    outframe = hdmi_out.newframe()
+	outframe = hdmi_out.newframe()
     cv2.cvtColor(gray_frame, cv2.COLOR_GRAY2RGB,dst=outframe)
     hdmi_out.writeframe(outframe)
+    outframe.freebuffer()
 
 
 
+    
 
-
-
+	
 
 hdmi_out.stop()
 hdmi_in.stop()

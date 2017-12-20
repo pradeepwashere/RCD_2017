@@ -39,30 +39,26 @@ while(capture.isOpened()):
 	#gray_image[temp_indices] = gray_image[temp_indices] * 255
 	#gray_image[temp_indices] = gray_image[temp_indices]/diff
 
-	for i in range(0,height):
-		for j in range(0,width):
-			if(gray_image[i,j] > maxi):
-				gray_image[i,j] = 255
-			elif(gray_image[i,j] < mini):
-				gray_image[i,j] = 0
-			else:#if(gray_image[i,j] >= mini and gray_image[i,j] <= maxi):
-				gray_image[i,j] = np.uint8(255*(gray_image[i,j]-mini)/diff)
-
 	hist = cv2.calcHist([gray_image],[0],None,[256],[0,256])
 	mini = np.where(hist >= CONTRAST_THRESHOLD)[0][0]
-	if mini > 0 :
-		mini = mini - 1
 	hist_rev = hist[::-1]
 	hist_rev = hist_rev[:(256-mini)]
 	maxi = np.where(hist_rev >= CONTRAST_THRESHOLD)[0][0]
 	maxi = 255 - maxi
-	if maxi < HISTOGRAM_SIZE:
-		maxi = maxi + 1
 	diff = maxi - mini
-	
+
+	for i in range(0,height):
+		for j in range(0,width):
+			if(gray_image[i,j] >= maxi):
+				gray_image[i,j] = 255
+			elif(gray_image[i,j] <= mini):
+				gray_image[i,j] = 0
+			else: #if(gray_image[i,j] > mini and gray_image[i,j] < maxi):
+				gray_image[i,j] = np.uint8(maxi*(gray_image[i,j]-mini)/diff)
+
 	cv2.imshow('frame',gray_image)
 
-	if cv2.waitKey(1) & 0xFF == 27 :
+	if (cv2.waitKey(1) & 0xFF == 27):
 		break
 
 capture.release()
