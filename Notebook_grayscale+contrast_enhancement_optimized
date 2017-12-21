@@ -37,7 +37,6 @@ numframes = 10
 for _ in range(numframes):
 	capture = hdmi_in.readframe()
 	cv2.cvtColor(capture, cv2.COLOR_RGB2GRAY,dst=gray_frame)
-    capture.freebuffer()
 
     hist = cv2.calcHist([gray_frame],[0],None,[256],[0,256])
 	mini = np.where(hist >= CONTRAST_THRESHOLD)[0][0]
@@ -59,7 +58,7 @@ for _ in range(numframes):
 	outframe = hdmi_out.newframe()
     cv2.cvtColor(gray_frame, cv2.COLOR_GRAY2RGB,dst=outframe)
     hdmi_out.writeframe(outframe)
-    outframe.freebuffer()
+    capture.freebuffer()
 
 
 
