@@ -31,6 +31,8 @@ hdmi_out.start()
 
 height = hdmi_in.mode.height
 width = hdmi_in.mode.width
+gray_frame = np.ndarray(shape=(height, 
+                              width), dtype=np.uint8)
 numframes = 10
 for _ in range(numframes):
 	capture = hdmi_in.readframe()
