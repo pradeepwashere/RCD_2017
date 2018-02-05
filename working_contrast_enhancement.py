@@ -15,6 +15,7 @@ capture = cv2.VideoCapture(0)
 while(capture.isOpened()):
 	ret, frame = capture.read()
 	height, width, channels = frame.shape
+	print(height, width)
 	gray_image = np.zeros([height,width], dtype=np.uint8)
 
 	for i in range(0,height):
