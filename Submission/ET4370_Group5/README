@@ -1,0 +1,45 @@
+1. The report for submission is the file named ET4370-RCD_Group5_Report.pdf under this directory.
+
+2. The Code directory contains the code we intend to submit. For the software implementation (under the Software directory), the base.bit and base.tcl files available on the board are to be used. This software implementation implements the algorithm completely. The HLS code     (available under HLS directory) contains the working hardware implementation of the algorithm with the limitation of fixed thresholds (no histogram computation).
+
+3. The NotWorkingAndIntermediateCode directory contains:
+   i) Hardware and software implementations for Grayscale conversion only - Working
+   ii) Under Software directory, the software implementation for complete algorithm with optimizations - Not working
+   iii) Under the HLS/Grayscale_conversion_and_contrast_enhancement/ directory, the code to implement the complete functionality (Grayscale conversion + contrast enhancement through histogram computation) in hardware through HLS - Not working
+
+4. The Results directory contains captures of the intermediate and final (all working) hardware and software implementation outputs. The image file names are self explanatory. The directory also contains pdf files indicating the Latency results obtained in lab. after execution of Python (software) implementations for:
+   i) Grayscale only (no histogram) computation - in Grayscale_only_Python_code_latency_result_on_Jupyter.pdf
+   ii) Grayscale conversion and contrast enhancement through histogram computation - in Grayscale_contrast_enhanced_Python_code_latency_result_on_Jupyter.pdf
+
+5. Information for some files along with the complete directory struture is given below:
+
+ET4370_Group5/
+├── Code			- Contains code to be submitted
+│   ├── HLS
+│   │   ├── Base_Video.ipynb	- The Python glue code
+│   │   ├── gce_ft.bit		- The bitstream	
+│   │   └── gce_ft.tcl		- The TCL file
+│   └── Software
+│       └── Grayscale_conversion_and_contrast_enhancement_Python.ipynb	- The Python implementation on Jupyter for the chosen algorithm
+├── ET4370-RCD_Group5_Report.pdf					- Report for submission
+├── NotWorkingAndIntermediateCode					
+│   ├── HLS							- Related to the hardware implementation through High Level Synthesis
+│   │   ├── Grayscale_conversion_and_contrast_enhancement	- Not working code	
+│   │   │   ├── Base_Video.ipynb	- The Python glue code for grayscale conversion + contrast enhancement through histogram computation
+│   │   │   ├── gce.bit			- The bitstream for grayscale conversion + contrast enhancement through histogram computation
+│   │   │   └── gce.tcl			- The TCL file for grayscale conversion + contrast enhancement through histogram computation
+│   │   └── Grayscale_conversion_only				- Working code
+│   │       ├── Base_Video.ipynb	- The Python glue code for grayscale conversion only (no histogram computation)
+│   │       ├── Gray.bit		- The bitstream for for grayscale conversion only (no histogram computation)
+│   │       └── Gray.tcl		- The TCL file for for grayscale conversion only (no histogram computation)
+│   └── Software
+│       ├── Grayscale_conversion_and_contrast_enhancement_optimized_Python.ipynb - Not working optimizations on Python(software) implementation
+│       └── Grayscale_conversion_only_Python.ipynb - Working Python(software) implementation for grayscale conversion only (no histogram |						     computation)
+├── README
+└── Results
+    ├── Grayscale_contrast_enhanced_Python_code_latency_result_on_Jupyter.pdf
+    ├── Grayscale_conversion_and_contrast_enhancement_fixed_threshold_hls.jpg
+    ├── Grayscale_conversion_and_contrast_enhancement_Python.jpg
+    ├── Grayscale_conversion_only_hls.jpg
+    ├── Grayscale_conversion_only_Python.jpg
+    └── Grayscale_only_Python_code_latency_result_on_Jupyter.pdf
