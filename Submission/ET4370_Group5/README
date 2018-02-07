@@ -18,7 +18,8 @@ ET4370_Group5/
 │   ├── HLS
 │   │   ├── Base_Video.ipynb	- The Python glue code
 │   │   ├── gce_ft.bit		- The bitstream	
-│   │   └── gce_ft.tcl		- The TCL file
+│   │   ├── gce_ft.tcl		- The TCL file
+│   │   └── main.cpp		- The code in HL which was synthesized, to be placed under ...PYNQ/hls/video1/ of the base video project
 │   └── Software
 │       └── Grayscale_conversion_and_contrast_enhancement_Python.ipynb	- The Python implementation on Jupyter for the chosen algorithm
 ├── ET4370-RCD_Group5_Report.pdf					- Report for submission
